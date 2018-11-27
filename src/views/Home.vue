@@ -10,7 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import CreateData from '@/components/CreateData.vue'; // @ is an alias to /src
 import SpaceTree from '@/components/SpaceComponent.vue'; // @ is an alias to /src
-import Axios from "axios";
+import Axios,{ AxiosInstance } from "axios";
 import * as DataModel from "../models/IotTwinsModel";
 
 @Component({
@@ -22,9 +22,11 @@ import * as DataModel from "../models/IotTwinsModel";
 export default class Home extends Vue {
   private spaces: DataModel.Space[] = [];
   load(): void {
+    var instance = this.$twinApi as AxiosInstance;
     console.log("reloading");
-    Axios.get<Array<DataModel.Space>>("spaces?maxLevel=1")
+    instance.get<Array<DataModel.Space>>("spaces?maxLevel=1")
       .then(response => {
+        console.log("home success");
         this.spaces = response.data;
       })
       .catch(err => {

@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
-import Axios from "axios";
+import {default as Axios, AxiosInstance} from "axios";
 import * as DataModel from "../models/IotTwinsModel";
 
 @Component
@@ -30,10 +30,11 @@ export default class CreateData extends Vue {
   spaceId: string = "";
   spacetype: number = 0;
   name: string = "";
-
+  
   @Watch("entity")
   onEntityChange(val: any) {
-    Axios.get<Array<DataModel.Space>>(
+    var instance = this.$twinApi as AxiosInstance;
+    instance.get<Array<DataModel.Space>>(
       "spaces"
     )
       .then(response => {
@@ -46,14 +47,22 @@ export default class CreateData extends Vue {
       });
   }
   createNew(): void {
+    var instance = this.$twinApi as AxiosInstance;
+    var hello = {
+        "name": "Shard Building 2",
+        "typeId": 14,
+        "subtypeId": 13,
+        "statusId": 12
+    }
+
     switch (this.entity) {
       case "space":
         var newSpace = {} as DataModel.Space;
         newSpace.name = this.name;
         newSpace.typeId = this.spacetype;
         if (this.spaceId) newSpace.parentSpaceId = this.spaceId;
-        console.info(newSpace);
-        Axios.post("spaces", newSpace)
+        console.info(hello);
+        instance.post("spaces", hello)
           .then(r => {
             console.info(r)
             this.$emit("entityCreated",r.data);
@@ -70,7 +79,8 @@ export default class CreateData extends Vue {
     }
   }
   created() {
-    Axios.get<Array<DataModel.Ontology>>("Ontologies?includes=Types").then(
+    var instance = this.$twinApi as AxiosInstance;
+    instance.get<Array<DataModel.Ontology>>("Ontologies?includes=Types").then(
       r => {
         let defaultOntologies = r.data[1].types as DataModel.Type[];
         this.defaultTypes = defaultOntologies;
@@ -83,7 +93,7 @@ export default class CreateData extends Vue {
     );
     this.entity = "space";
 
-    Axios.get<Array<DataModel.Space>>(
+    instance.get<Array<DataModel.Space>>(
       "spaces"
     )
       .then(response => {
