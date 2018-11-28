@@ -13,10 +13,12 @@
           :items="space.children"
           :load-children="fetchSpaces"
           :open.sync="open"
+          :value="selectedSpace"
           activatable
           active-class="primary--text"
           hoverable
           open-on-click
+          item-key="id"
           transition
         >
           <v-icon
@@ -37,7 +39,6 @@
             class="title grey--text text--lighten-1 font-weight-light"
             style="align-self: center;"
           >
-            
           </div>
           <v-card
             v-else
@@ -47,20 +48,9 @@
             max-width="400"
           >
             <v-card-text>
-              <v-avatar
-                v-if="avatar"
-                size="88"
-              >
-                <v-img
-                  :src="`https://avataaars.io/${avatar}`"
-                  class="mb-4"
-                ></v-img>
-              </v-avatar>
               <h3 class="headline mb-2">
                 {{ selected.name }}
               </h3>
-              <div class="blue--text mb-2">{{ selected.email }}</div>
-              <div class="blue--text subheading font-weight-bold">{{ selected.username }}</div>
             </v-card-text>
             <v-divider></v-divider>
             <v-layout
@@ -68,14 +58,8 @@
               text-xs-left
               wrap
             >
-              <v-flex tag="strong" xs5 text-xs-right mr-3 mb-2>Company:</v-flex>
-              <v-flex>{{ selected.company.name }}</v-flex>
-              <v-flex tag="strong" xs5 text-xs-right mr-3 mb-2>Website:</v-flex>
-              <v-flex>
-                <a :href="`//${selected.website}`" target="_blank">{{ selected.website }}</a>
-              </v-flex>
-              <v-flex tag="strong" xs5 text-xs-right mr-3 mb-2>Phone:</v-flex>
-              <v-flex>{{ selected.phone }}</v-flex>
+
+              
             </v-layout>
           </v-card>
         </v-scroll-y-transition>
@@ -101,37 +85,50 @@ import SpaceTree from "./SpaceComponent.vue";
 export default class SpaceComponent extends Vue {
   private spaceData: DataModel.Space[] = [];
   @Prop()
-  private recursive!: boolean;
-  @Prop()
   private space!: DataModel.Space;
   private active: any[] = [];
   private open: any[] = [];
-  private selected: DataModel.Space | null = null;
+  private selectedSpace: string | null = null;
   private datas: DataModel.Space[] = [];
+  private allspaces: DataModel.Space[] = []
   private devices?: DataModel.Device[] = [];
+  private selected: DataModel.Space | null = null;
+  /*  console.log("Selected");
+        if (!this.active.length) return undefined;
+        const id = this.active[0];
+        return this.allspaces.find(x => x.id === id);
+
+  }*/
+  @Watch("active")
+  private changeActive(value: any, oldValue: any){
+    console.log("active")
+    console.info(value.length);
+    console.info(value[0]);
+    console.info(oldValue.length);
+  }
   async created() {
     var instance = this.$twinApi as AxiosInstance;
     if (this.space) {
       if(this.space.children)
       {
         this.space.children.map(c => c.children = []);
-      }
+      } 
       console.info(this.space.children);
       this.devices = this.space.devices;
     }
+    this.allspaces = (await instance.get<Array<DataModel.Space>>(`spaces?includes=Devices,Properties`)).data;
+    
   }
   async fetchSpaces(item: DataModel.Space) {
     let space = await this.loadSpace(item.id);
-    console.log(space);
     if(space.children && item.children)
     {
       item.children.push(...space.children);
     }
   }
   private async loadSpace  (id:string) : Promise<DataModel.Space> {
-    console.log(`load space ${id}`);
     var instance = this.$twinApi as AxiosInstance;
-    let response = await instance.get<Array<DataModel.Space>>(`spaces?includes=ChildSpaces,Devices&spaceId=${id}`)
+    let response = await instance.get<Array<DataModel.Space>>(`spaces?includes=ChildSpaces&spaceId=${id}`)
     let space = response.data[0];
     if(space.children && space.children.length > 0)
     {

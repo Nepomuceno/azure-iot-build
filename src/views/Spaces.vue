@@ -1,8 +1,10 @@
 <template>
-  <div class="spaces">
+<v-card>
+  <v-card-title class="headline font-weight-regular">Spaces</v-card-title>
     <CreateData v-on:entityCreated="load" />
-    <h1>This is an about spaces</h1>
-  </div>
+  <v-card-text>
+  </v-card-text>
+</v-card>
 </template>
 
 <script lang="ts">

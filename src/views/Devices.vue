@@ -1,12 +1,15 @@
 <template>
-  <div class="devices">
-    <h1>This is an about devices</h1>
-  </div>
+<v-card>
+  <v-card-title class="headline font-weight-regular">Devices</v-card-title>
+  <CreateData v-on:entityCreated="load" />
+  <v-card-text>
+  </v-card-text>
+</v-card>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import CreateData from "@/components/CreateSpace.vue"; // @ is an alias to /src
+import CreateData from "@/components/CreateDevice.vue"; // @ is an alias to /src
 import Axios, { AxiosInstance } from "axios";
 import * as DataModel from "@/models/IotTwinsModel";
 

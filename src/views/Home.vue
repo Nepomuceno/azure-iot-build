@@ -1,18 +1,9 @@
 <template>
-<v-container>
-    <v-layout
-      text-xs-justify
-      wrap
-    >
-      <v-flex
-        xs12
-        mb-5
-      >
-      <space-tree v-for="space in spaces" :space="space" :key="space.id" recursive="true"/>
-    
-      </v-flex>
-    </v-layout>
-</v-container>
+  <v-layout text-xs-justify wrap>
+    <v-flex xs12 mb-5 >
+    <space-tree v-for="space in spaces" :space="space" :key="space.id" recursive="true"/>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -28,18 +19,9 @@ import * as DataModel from "../models/IotTwinsModel";
 })
 export default class Home extends Vue {
   private spaces: DataModel.Space[] = [];
-  load(): void {
+  async load() {
     var instance = this.$twinApi as AxiosInstance;
-    console.log("reloading");
-    instance
-      .get<Array<DataModel.Space>>("spaces?maxLevel=1&includes=ChildSpaces")
-      .then(response => {
-        console.info(response.data);
-        this.spaces = response.data;
-      })
-      .catch(err => {
-        console.info(err);
-      });
+    this.spaces = (await instance.get<Array<DataModel.Space>>("spaces?maxLevel=1&includes=ChildSpaces")).data
   }
   created() {
     this.load();
