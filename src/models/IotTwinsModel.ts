@@ -1,12 +1,12 @@
 export interface Space {
-    children?:            Parent[];
+    children?:            Space[];
     sensors?:             Sensor[];
     devices?:             Device[];
     resources?:           Resource[];
     timeZone?:            TimeZone;
     effectiveTimeZone?:   TimeZone;
     users?:               User[];
-    parent?:              Parent;
+    parent?:              Space;
     values?:              Value[];
     properties?:          Property[];
     id:                   string;
@@ -49,27 +49,6 @@ export interface Type {
     fullName?:     string;
     spacePaths?:   string[];
     ontologies?:   null[];
-}
-
-export interface Parent {
-    properties?:          Property[];
-    id:                   string;
-    name?:                string;
-    description?:         string;
-    friendlyName?:        string;
-    type?:                string;
-    typeId?:              number;
-    parentSpaceId?:       string;
-    subtype?:             string;
-    subtypeId?:           number;
-    location?:            Location;
-    timeZoneId?:          number;
-    status?:              string;
-    statusId?:            number;
-    fullName?:            string;
-    spacePaths?:          string[];
-    effectiveLocation?:   Location;
-    effectiveTimeZoneId?: number;
 }
 
 export interface Location {
