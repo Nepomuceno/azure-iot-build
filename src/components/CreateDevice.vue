@@ -28,7 +28,7 @@ import { default as Axios, AxiosInstance } from "axios";
 import * as DataModel from "../models/IotTwinsModel";
 
 @Component
-export default class CreateSpace extends Vue {
+export default class CreateDevice extends Vue {
   spaces: DataModel.Space[] = [];
   spaceId: string | null = null;
   hardwareId?: string;
@@ -76,7 +76,6 @@ export default class CreateSpace extends Vue {
       .get<Array<DataModel.Space>>("spaces")
       .then(response => {
         this.spaceId = "";
-        console.info(response.data);
         this.spaces = response.data;
       })
       .catch(err => {

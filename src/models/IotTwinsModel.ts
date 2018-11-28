@@ -84,7 +84,7 @@ export interface Device {
     deviceKey?:                  string;
     sasToken?:                   string;
     connectionString?:           string;
-    space?:                      Parent;
+    space?:                      Space;
     sensors?:                    Sensor[];
     fullName?:                   string;
     spacePaths?:                 string[];
@@ -102,7 +102,7 @@ export interface Resource {
     region?:              string;
     isExternallyCreated?: boolean;
     parameters?:          Parameters;
-    space?:               Parent;
+    space?:               Space;
     status?:              string;
     fullName?:            string;
     spacePaths?:          string[];
@@ -146,7 +146,7 @@ export interface Sensor {
     dataTypeId?:        number;
     dataSubtypeId?:     number;
     typeId?:            number;
-    space?:             Parent;
+    space?:             Space;
     properties?:        Property[];
     effectiveLocation?: Location;
     fullName?:          string;
@@ -184,7 +184,7 @@ export interface User {
     metadata?:          Parameters;
     effectiveLocation?: Location;
     spaceId?:           string;
-    space?:             Parent;
+    space?:             Space;
     photoUri?:          string;
     fullName?:          string;
     spacePaths?:        string[];

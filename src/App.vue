@@ -16,8 +16,12 @@
           <span>Spaces</span>
       </v-btn>
       <v-btn flat href="/devices" >
-          <v-icon>memory</v-icon>
+          <v-icon>device</v-icon>
           <span>Devices</span>
+      </v-btn>
+      <v-btn flat href="/sensors" >
+          <v-icon>memory</v-icon>
+          <span>Sensors</span>
       </v-btn>
     </v-toolbar>
     
