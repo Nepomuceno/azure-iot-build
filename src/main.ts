@@ -5,6 +5,8 @@ import router from './router';
 import store from './store';
 import Axios from 'axios';
 import { default as Adal, AxiosAuthHttp } from 'vue-adal';
+import VueDraggable from 'vue-draggable';
+
 Vue.config.productionTip = false;
 
 const DigitalTwinsAppId = '0b07f429-9f4b-4714-9392-cc5e8e80c8b0';
@@ -47,7 +49,9 @@ Vue.prototype.$twinApi = AxiosAuthHttp.createNewClient({
     console.log(error);
   },
 });
+
 const adal = Adal as PluginObject<any>;
+Vue.use(VueDraggable);
 Vue.use(adal, {
   config: {
     tenant: process.env.VUE_APP_TENANT_ID,
