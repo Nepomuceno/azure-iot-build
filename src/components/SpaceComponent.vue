@@ -7,7 +7,7 @@
       justify-space-between
       pa-3
     >
-      <v-flex xs5>
+    <v-flex xs12>
       <div v-drag-and-drop:options="options" class="drag-wrapper">
     <ul class="drop red">
       <li>
@@ -98,16 +98,16 @@ export default class SpaceComponent extends Vue {
   private selected: DataModel.Space | null = null;
   private selection = [];
   private options = {
-      dropzoneSelector: '.drop',
-      draggableSelector: 'li',
-      // excludeOlderBrowsers: true,
-      // showDropzoneAreas: true,
-      multipleDropzonesItemsDraggingEnabled: true,
-      onDrop(event) {
-         console.log('drop');
-         console.info(event);
-      }
+    dropzoneSelector: ".drop",
+    draggableSelector: "li",
+    // excludeOlderBrowsers: true,
+    showDropzoneAreas: true,
+    multipleDropzonesItemsDraggingEnabled: true,
+    onDrop(event) {
+      console.log("drop");
+      console.info(event);
     }
+  };
   private display(item: any) {
     return item.label;
   }
