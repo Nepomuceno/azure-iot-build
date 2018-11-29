@@ -16,7 +16,7 @@
           <span>Spaces</span>
       </v-btn>
       <v-btn flat href="/devices" >
-          <v-icon>device</v-icon>
+          <v-icon>developer_board</v-icon>
           <span>Devices</span>
       </v-btn>
       <v-btn flat href="/sensors" >

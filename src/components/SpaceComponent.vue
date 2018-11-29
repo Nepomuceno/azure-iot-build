@@ -58,6 +58,7 @@
               text-xs-left
               wrap
             >
+            
 
               
             </v-layout>

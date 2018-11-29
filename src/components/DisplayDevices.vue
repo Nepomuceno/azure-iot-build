@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid grid-list-md>
+  <v-container fluid grid-list-md>
     <v-data-iterator
       :items="devices"
       :pagination.sync="pagination"
@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
-import * as DataModel from "../models/IotTwinsModel";
+import * as DataModel from "@/models/IotTwinsModel";
 
 @Component
 export default class DisplayDevices extends Vue {
