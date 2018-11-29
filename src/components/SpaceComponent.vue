@@ -76,6 +76,8 @@ import Axios from "axios";
 import {AxiosInstance} from "axios";
 import * as DataModel from "../models/IotTwinsModel";
 import SpaceTree from "./SpaceComponent.vue";
+import { TreeView } from "@bosket/vue"
+// https://elbywan.github.io/bosket/vue/index.html#Introduction
 
 @Component({
   name: "SpaceTree",
