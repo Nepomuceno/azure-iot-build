@@ -24,6 +24,7 @@ export default class Spaces extends Vue {
   
   load(): void {
     var instance = this.$twinApi as AxiosInstance;
+    
   }
   created() {
     this.load();

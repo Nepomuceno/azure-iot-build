@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="createNew" lazy-validation>
+  <v-form @submit.prevent="createNew" xs-6 lazy-validation>
     <v-text-field
       type="text"
       v-model="hardwareId"
@@ -20,7 +20,7 @@
     <v-divider></v-divider>
     <v-radio-group v-model="sensorTypeId" row>
       <div slot="label">Sensor type</div>
-      <v-radio v-for="n in sensorTypes" :key="n.id" :label="`${n.name}`" :value="n"></v-radio>
+      <v-radio v-for="n in sensorTypes" :key="n.id" :label="`${n.name}`" :value="n.id"></v-radio>
     </v-radio-group>
     <v-btn @click="createNew">Create new Sensor</v-btn>
   </v-form>
@@ -35,12 +35,14 @@ import * as DataModel from "../models/IotTwinsModel";
 export default class CreateSensor extends Vue {
   sensorTypes = [
     { id: 314, name: "Sensor ENL ZN" },
-    { id: 315, name: "Sensor ENL ZN VC" }
+    { id: 315, name: "Sensor ENL ZN VC" },
+    { id: 317, name: "Sensor ENL AQN" },
+    { id: 318, name: "ELSYS" },
   ];
   sensorTypeId: number = 314;
   devices: DataModel.Device[] = [];
   deviceId: string | null = null;
-  hardwareId?: string;
+  hardwareId: string = "";
   hardwareIdRules = [(v: any) => !!v || "Hardware id is required"];
 
   createNew(): void {
@@ -48,7 +50,10 @@ export default class CreateSensor extends Vue {
     var newSensor = {} as DataModel.Sensor;
     newSensor.hardwareId = this.hardwareId;
     newSensor.deviceId = this.deviceId ? this.deviceId : this.devices[0].id;
-    newSensor.typeId = this.sensorTypeId;
+    newSensor.typeId = 9;
+    newSensor.dataTypeId = this.sensorTypeId;
+    newSensor.dataSubtypeId = 5;
+    newSensor.portTypeId = 8;
     console.log(newSensor);
     instance
       .post("sensors", newSensor)

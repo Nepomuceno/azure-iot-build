@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-flex>
   <v-card>
     <v-card-title class="headline font-weight-regular">Devices</v-card-title>
     <DisplayDevices :devices="devices" />
@@ -12,7 +12,7 @@
     <v-card-text>
     </v-card-text>
   </v-card>
-</div>
+</v-flex>
 </template>
 
 <script lang="ts">
@@ -31,9 +31,10 @@ import * as DataModel from "@/models/IotTwinsModel";
 export default class Devices extends Vue {
   
   private devices: DataModel.Device[] = [];
+  spaces: DataModel.Space[] = [];
   async load(): Promise<void> {
     var instance = this.$twinApi as AxiosInstance;
-    instance.get<Array<DataModel.Device>>("devices?includes=sensors,sensorsValues")
+    instance.get<DataModel.Device[]>("devices?includes=sensors,sensorsValues")
       .then(response => {
         console.log("devices");
         this.devices = response.data;

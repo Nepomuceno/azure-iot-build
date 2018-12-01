@@ -22,6 +22,7 @@ import DisplaySensors from "@/components/DisplaySensors.vue"; // @ is an alias t
 import Axios, { AxiosInstance } from "axios";
 import * as DataModel from "@/models/IotTwinsModel";
 
+
 @Component({
   components: {
     CreateData,
@@ -30,13 +31,13 @@ import * as DataModel from "@/models/IotTwinsModel";
 })
 export default class Devices extends Vue {
   
-  private sensors: DataModel.Device[] = [];
+  private sensors: DataModel.Sensor[] = [];
   async load(): Promise<void> {
     var instance = this.$twinApi as AxiosInstance;
-    instance.get<Array<DataModel.Sensor>>("sensors?includes=value")
+    instance.get<DataModel.Sensor[]>("sensors?includes=value,properties")
       .then(response => {
         this.sensors = response.data;
-        console.info(this.sensors);
+        console.info(this.sensors)
       })
       .catch(err => {
         console.info(err);

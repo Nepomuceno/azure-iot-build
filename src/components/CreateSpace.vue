@@ -1,5 +1,5 @@
 <template>
-<v-form @submit.prevent="createNew">
+<v-form @submit.prevent="createNew" xs-6>
   <v-text-field type="text" v-model="name" solo label="Name"/>
   <v-autocomplete
   :items="spaces"
@@ -53,7 +53,7 @@ export default class CreateSpace extends Vue {
   created() {
     var instance = this.$twinApi as AxiosInstance;
     instance
-      .get<Array<DataModel.Ontology>>("Ontologies?includes=Types")
+      .get<DataModel.Ontology[]>("Ontologies?includes=Types")
       .then(r => {
         let defaultOntologies = r.data[1].types as DataModel.Type[];
         this.defaultTypes = defaultOntologies;
@@ -63,9 +63,9 @@ export default class CreateSpace extends Vue {
       });
 
     instance
-      .get<Array<DataModel.Space>>("spaces")
+      .get<DataModel.Space[]>("spaces")
       .then(response => {
-        this.spaceId = "";
+        this.parentSpaceId = "";
         console.info(response.data);
         this.spaces = response.data;
       })

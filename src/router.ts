@@ -3,7 +3,9 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Spaces from './views/Spaces.vue';
 import Devices from './views/Devices.vue';
+import Device from './views/Device.vue';
 import Sensors from './views/Sensors.vue';
+import Sensor from './views/Sensor.vue';
 
 Vue.use(Router);
 
@@ -28,9 +30,19 @@ export default new Router({
       component: Devices,
     },
     {
+      path: '/devices/:id',
+      name: 'device',
+      component: Device,
+    },
+    {
       path: '/sensors',
       name: 'Sensors',
       component: Sensors,
+    },
+    {
+      path: '/sensors/:id',
+      name: 'Sensor',
+      component: Sensor,
     },
   ],
 });

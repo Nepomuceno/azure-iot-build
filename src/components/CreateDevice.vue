@@ -1,17 +1,8 @@
 <template>
-    <v-form @submit.prevent="createNew" lazy-validation>
+    <v-form @submit.prevent="createNew" xs-6 lazy-validation>
       <v-text-field type="text" v-model="name" solo label="Name"/>
-      <v-text-field type="text" 
-       v-model="hardwareId"
-       solo
-       :rules="hardwareIdRules" 
-       label="Hardware Id"/>
-      
-      <v-autocomplete
-      :items="spaces"
-      item-value="id"
-      v-model="spaceId"
-      solo
+      <v-text-field type="text" v-model="hardwareId" solo :rules="hardwareIdRules" label="Hardware Id"/>
+      <v-autocomplete :items="spaces" item-value="id" v-model="spaceId" solo
       hide-no-data
       hide-details
       label="Deployed Space"
@@ -29,6 +20,7 @@ import * as DataModel from "../models/IotTwinsModel";
 
 @Component
 export default class CreateDevice extends Vue {
+
   spaces: DataModel.Space[] = [];
   spaceId: string | null = null;
   hardwareId?: string;

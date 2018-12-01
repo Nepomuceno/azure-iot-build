@@ -23,8 +23,8 @@ export default class Home extends Vue {
   private spaces: DataModel.Space[] = [];
   async load() {
     var instance = this.$twinApi as AxiosInstance;
-    this.spaces = (await instance.get<Array<DataModel.Space>>(
-      "spaces?maxLevel=1&includes=ChildSpaces"
+    this.spaces = (await instance.get<DataModel.Space[]>(
+      "spaces?maxLevel=1&includes=ChildSpaces,Devices"
     )).data;
   }
   created() {

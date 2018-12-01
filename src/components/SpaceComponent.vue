@@ -8,72 +8,48 @@
       pa-3
     >
     <v-flex xs12>
-      <div v-drag-and-drop:options="options" class="drag-wrapper">
-    <ul class="drop red">
-      <li>
-        <ul class="drop">
-          <li> bla </li>
-        </ul>
-       </li>
-      
-      <li>Item 2</li>
-      <li>Item 3</li>
-    </ul>
-    <ul class="drop blue">
-      <li>Item 4</li>
-      <li>Item 5</li>
-      <li>Item 6</li>
-    </ul>
-    <ul class="green">
-      <li>Item 7</li>
-      <li>Item 8</li>
-      <li>Item 9</li>
-    </ul>
-  </div>
-      </v-flex>
-      <v-flex
-        d-flex
-        text-xs-center
-      >
-        <v-scroll-y-transition mode="out-in">
-          <div
-            v-if="!selected"
-            class="title grey--text text--lighten-1 font-weight-light"
-            style="align-self: center;"
-          >
-          </div>
-          <v-card
-            v-else
-            :key="selected.id"
-            class="pt-4 mx-auto"
-            flat
-            max-width="400"
-          >
-            <v-card-text>
-              <h3 class="headline mb-2">
-                {{ selected.name }}
-              </h3>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-layout
-              tag="v-card-text"
-              text-xs-left
-              wrap
-            >
-            
-
-              
-            </v-layout>
-          </v-card>
-        </v-scroll-y-transition>
-      </v-flex>
+    </v-flex>
+    <v-flex
+      d-flex
+      text-xs-center
+    >
+      <v-scroll-y-transition mode="out-in">
+        <div
+          v-if="!selected"
+          class="title grey--text text--lighten-1 font-weight-light"
+          style="align-self: center;"
+        >
+        </div>
+        <v-card
+          v-else
+          :key="selected.id"
+          class="pt-4 mx-auto"
+          flat
+          max-width="400"
+        >
+          <v-card-text>
+            <h3 class="headline mb-2">
+              {{ selected.name }}
+            </h3>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-layout
+            tag="v-card-text"
+            text-xs-left
+            wrap
+          > 
+          </v-layout>
+        </v-card>
+      </v-scroll-y-transition>
+    </v-flex>
     </v-layout>
   </v-card>
       
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
+import Vue from 'vue';
+import { Component, Prop, Watch, Emit } from "vue-property-decorator";
 import Axios from "axios";
 import { AxiosInstance } from "axios";
 import * as DataModel from "../models/IotTwinsModel";
@@ -97,17 +73,6 @@ export default class SpaceComponent extends Vue {
   private devices?: DataModel.Device[] = [];
   private selected: DataModel.Space | null = null;
   private selection = [];
-  private options = {
-    dropzoneSelector: ".drop",
-    draggableSelector: "li",
-    // excludeOlderBrowsers: true,
-    showDropzoneAreas: true,
-    multipleDropzonesItemsDraggingEnabled: true,
-    onDrop(event) {
-      console.log("drop");
-      console.info(event);
-    }
-  };
   private display(item: any) {
     return item.label;
   }
@@ -166,7 +131,7 @@ export default class SpaceComponent extends Vue {
       console.info(this.space.children);
       this.devices = this.space.devices;
     }
-    this.allspaces = (await instance.get<Array<DataModel.Space>>(
+    this.allspaces = (await instance.get<DataModel.Space[]>(
       `spaces?includes=Devices,Properties`
     )).data;
   }
@@ -178,7 +143,7 @@ export default class SpaceComponent extends Vue {
   }
   private async loadSpace(id: string): Promise<DataModel.Space> {
     var instance = this.$twinApi as AxiosInstance;
-    let response = await instance.get<Array<DataModel.Space>>(
+    let response = await instance.get<DataModel.Space[]>(
       `spaces?includes=ChildSpaces&spaceId=${id}`
     );
     let space = response.data[0];
